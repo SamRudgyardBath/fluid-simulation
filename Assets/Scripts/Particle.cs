@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Timeline;
 
-public class Circle : MonoBehaviour
+public class Particle : MonoBehaviour
 {
     public Vector2 position;
     public Vector2 velocity;

@@ -19,12 +19,12 @@ public class Simulation : MonoBehaviour
     #endregion
 
     #region Private Properties
-    Circle[] particles;
+    Particle[] particles;
     #endregion
 
     // Start is called before the first frame update
     void Start() {
-        particles = new Circle[noOfParticles];
+        particles = new Particle[noOfParticles];
 
         int particlesPerRow = (int) Mathf.Sqrt(noOfParticles);
         int particlesPerColumn = (noOfParticles - 1) / particlesPerRow + 1;
@@ -32,7 +32,7 @@ public class Simulation : MonoBehaviour
 
         for (int i = 0; i < noOfParticles; i++) {
             GameObject particleGO = Instantiate(particlePrefab);
-            Circle currentParticle = particleGO.GetComponent<Circle>();
+            Particle currentParticle = particleGO.GetComponent<Particle>();
             // Arrange particles
             float x = (i % particlesPerRow - particlesPerRow/2f + 0.5f) * spacing;
             float y = (i / particlesPerRow - particlesPerColumn/2f + 0.5f) * spacing;
@@ -50,7 +50,7 @@ public class Simulation : MonoBehaviour
     // Update is called once per frame
     void Update() {
         for (int i = 0; i < particles.Length; i++) {
-            Circle currentParticle = particles[i];
+            Particle currentParticle = particles[i];
             currentParticle.velocity += Vector2.down * gravity * Time.deltaTime;
             currentParticle.position += currentParticle.velocity * Time.deltaTime;
             ResolveCollisions(ref particles[i].position, ref particles[i].velocity);
