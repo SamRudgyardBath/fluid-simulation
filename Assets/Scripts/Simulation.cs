@@ -69,4 +69,19 @@ public class Simulation : MonoBehaviour
             theVelocity.y *= -1 * dampingFactor;
         }
     }
+
+    // Polynomial Smoothing Kernel proposed by Muller
+    float SmoothingKernelPoly(float distance, float coreRadius) {
+        return Mathf.Max(0, 315 / (64 * Mathf.PI * Mathf.Pow(coreRadius, 9)) * Mathf.Pow(Mathf.Pow(coreRadius, 2) - Mathf.Pow(distance, 2), 3));
+    }
+
+    // Spiky Smoothing Kernel proposed by Muller
+    float SmoothingKernelSpiky(float distance, float coreRadius) {
+        return Mathf.Max(0, 15 / (Mathf.PI * Mathf.Pow(coreRadius, 6)) * Mathf.Pow(coreRadius - distance, 3));
+    }
+
+    // Viscosity Smoothing Kernel proposed by Muller
+    float SmoothingKernelViscosity(float distance, float coreRadius) {
+        return Mathf.Max(0, 15 / (2 * Mathf.PI * Mathf.Pow(coreRadius, 3)) * (- Mathf.Pow(distance, 3)/(2 * Mathf.Pow(coreRadius, 3)) + Mathf.Pow(distance, 2)/Mathf.Pow(coreRadius, 2) + coreRadius/(2 * distance) - 1));
+    }
 }
