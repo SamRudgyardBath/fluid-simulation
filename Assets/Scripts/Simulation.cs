@@ -9,8 +9,8 @@ public class Simulation : MonoBehaviour
 {
     #region Public Properties
     public float gravity;
-    public float particleSize = 1;
-    public int noOfParticles = 10;
+    public float particleSize = 0.1f;
+    public int noOfParticles = 100;
     public float particleSpacing;
     public Vector2 boundSize = new Vector2(10f, 10f);
     [Range(0,1)]
@@ -24,8 +24,6 @@ public class Simulation : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        particleSize = 1f;
-
         particles = new Circle[noOfParticles];
 
         int particlesPerRow = (int) Mathf.Sqrt(noOfParticles);
@@ -44,6 +42,7 @@ public class Simulation : MonoBehaviour
             // Set particle size
             currentParticle.transform.localScale = Vector3.one * particleSize;
         }
+
         boundSize = new Vector2(10, 10);
         dampingFactor = 1f;
     }
@@ -70,5 +69,4 @@ public class Simulation : MonoBehaviour
             theVelocity.y *= -1 * dampingFactor;
         }
     }
-
 }
