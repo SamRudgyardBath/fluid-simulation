@@ -15,6 +15,7 @@ public class Simulation : MonoBehaviour
     public Vector2 boundSize = new Vector2(10f, 10f);
     [Range(0,1)]
     public float dampingFactor;
+    public float coreRadius = 1f;
     public GameObject particlePrefab;
     #endregion
 
@@ -58,6 +59,10 @@ public class Simulation : MonoBehaviour
         }
     }
 
+    void CalculateDensity() {
+
+    }
+
     void ResolveCollisions(ref Vector2 thePosition, ref Vector2 theVelocity) {
         Vector2 halfBoundSize = boundSize / 2 - Vector2.one * particleSize;
         if (Mathf.Abs(thePosition.x) > halfBoundSize.x) {
@@ -71,17 +76,17 @@ public class Simulation : MonoBehaviour
     }
 
     // Polynomial Smoothing Kernel proposed by Muller
-    float SmoothingKernelPoly(float distance, float coreRadius) {
+    float SmoothingKernelPoly(float distance) {
         return Mathf.Max(0, 315 / (64 * Mathf.PI * Mathf.Pow(coreRadius, 9)) * Mathf.Pow(Mathf.Pow(coreRadius, 2) - Mathf.Pow(distance, 2), 3));
     }
 
     // Spiky Smoothing Kernel proposed by Muller
-    float SmoothingKernelSpiky(float distance, float coreRadius) {
+    float SmoothingKernelSpiky(float distance) {
         return Mathf.Max(0, 15 / (Mathf.PI * Mathf.Pow(coreRadius, 6)) * Mathf.Pow(coreRadius - distance, 3));
     }
 
     // Viscosity Smoothing Kernel proposed by Muller
-    float SmoothingKernelViscosity(float distance, float coreRadius) {
+    float SmoothingKernelViscosity(float distance) {
         return Mathf.Max(0, 15 / (2 * Mathf.PI * Mathf.Pow(coreRadius, 3)) * (- Mathf.Pow(distance, 3)/(2 * Mathf.Pow(coreRadius, 3)) + Mathf.Pow(distance, 2)/Mathf.Pow(coreRadius, 2) + coreRadius/(2 * distance) - 1));
     }
 }
